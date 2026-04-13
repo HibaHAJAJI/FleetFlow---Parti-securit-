@@ -4,6 +4,7 @@ import com.fleetflow.Dto.ChauffeurDTO;
 import com.fleetflow.Service.ChauffeurService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,15 +39,15 @@ public class ChauffeurController {
 
     @PostMapping
     @Operation(summary = "Ajouter un chauffeur")
-    public ResponseEntity<ChauffeurDTO> createChauffeur(@RequestBody ChauffeurDTO chauffeurDTO) {
+    public ResponseEntity<ChauffeurDTO> createChauffeur(@Valid @RequestBody ChauffeurDTO chauffeurDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(chauffeurService.createChauffeur(chauffeurDTO));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Modifier un chauffeur")
-    public ResponseEntity<ChauffeurDTO> updateChauffeur(@PathVariable Long id,
-                                                        @RequestBody ChauffeurDTO chauffeurDTO) {
+    public ResponseEntity<ChauffeurDTO> updateChauffeur( @PathVariable Long id,
+                                                         @Valid @RequestBody ChauffeurDTO chauffeurDTO) {
         return ResponseEntity.ok(chauffeurService.updateChauffeur(id, chauffeurDTO));
     }
 

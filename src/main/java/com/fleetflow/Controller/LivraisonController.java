@@ -5,6 +5,7 @@ import com.fleetflow.Service.LivraisonService;
 import com.fleetflow.enums.StatutLivraison;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class LivraisonController {
 
     @PostMapping
     @Operation(summary = "Créer une livraison")
-    public ResponseEntity<LivraisonDTO> createLivraison(@RequestBody LivraisonDTO livraisonDTO) {
+    public ResponseEntity<LivraisonDTO> createLivraison(@Valid @RequestBody LivraisonDTO livraisonDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(livraisonService.createLivraison(livraisonDTO));
     }

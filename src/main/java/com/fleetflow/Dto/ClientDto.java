@@ -3,6 +3,7 @@ package com.fleetflow.Dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -17,5 +18,6 @@ public class ClientDto {
     @NotBlank(message = "Le ville est obligatoire")
     private String ville;
     @NotBlank(message = "Le Telephone est obligatoire")
+    @Size()
     private String telephone;
 }
