@@ -2,6 +2,9 @@ package com.fleetflow.Controller;
 
 import com.fleetflow.Dto.ClientDto;
 import com.fleetflow.Service.ClientService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +23,12 @@ public class ClientController {
         return clientService.getAllClient();
     }
     @PostMapping("/ajouter")
-    public ClientDto ajouterClient(@RequestBody ClientDto dto){
-        return clientService.addClient(dto);
+    public ResponseEntity<ClientDto> ajouterClient(@Valid @RequestBody ClientDto dto){
+        return new ResponseEntity<>(clientService.addClient(dto), HttpStatus.CREATED) ;
     }
     @PutMapping("/modifier/{id}")
-    public ClientDto modifierClient(@PathVariable Long id,@RequestBody ClientDto dto){
-        return clientService.updateClient(id,dto);
+    public ResponseEntity<ClientDto> modifierClient(@PathVariable Long id,@RequestBody ClientDto dto){
+        return new ResponseEntity<>( clientService.updateClient(id,dto),HttpStatus.CREATED);
     }
     @DeleteMapping("/supprimer/{id}")
     public void supprimerClient(@PathVariable Long id){
