@@ -19,11 +19,13 @@ jobs:
       - name: Cache Maven
         uses: actions/cache@v4
         with:
-          path: ~/.m2/repository
+          path: ~/.m2
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys:
+          restore-keys: |
             ${{ runner.os }}-maven-
+
       - name: Run test
-        run: mvn test
+        run: ./mvnw test
+
       - name: build
-        run:  mvn package -DskipTests
+        run: ./mvnw package -DskipTests
