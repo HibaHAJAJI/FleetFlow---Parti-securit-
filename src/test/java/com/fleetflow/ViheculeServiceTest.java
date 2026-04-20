@@ -30,7 +30,6 @@ public class ViheculeServiceTest {
     @Mock
     private VehiculeMapper vehiculeMapper;
 
-
     @Test
     void shouldVehicule_disponible(){
         StatutVehicule status=StatutVehicule.valueOf("DISPONIBLE");
