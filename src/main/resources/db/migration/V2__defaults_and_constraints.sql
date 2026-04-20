@@ -1,7 +1,7 @@
 ALTER TABLE livraison
-    ADD COLUMN client_id BIGINT,
-    ADD COLUMN chauffeur_id BIGINT,
-    ADD COLUMN vehicule_id BIGINT;
+               ADD COLUMN client_id BIGINT,
+               ADD COLUMN chauffeur_id BIGINT,
+               ADD COLUMN vehicule_id BIGINT;
 ALTER TABLE livraison
     ADD CONSTRAINT fk_livraison_client
         FOREIGN KEY (client_id) REFERENCES client(id),
@@ -13,13 +13,14 @@ ALTER TABLE livraison
         FOREIGN KEY (vehicule_id) REFERENCES vehicule(id);
 
 ALTER TABLE vehicule
-    MODIFY statut VARCHAR(30) NOT NULL DEFAULT 'DISPONIBLE';
+    MODIFY statut ENUM('DISPONIBLE','EN_LIVRAISON','MAINTENANCE') NOT NULL DEFAULT 'DISPONIBLE';
 
 ALTER TABLE chauffeur
     MODIFY disponible BOOLEAN NOT NULL DEFAULT TRUE;
 
 ALTER TABLE livraison
-    MODIFY statut VARCHAR(30) NOT NULL DEFAULT 'ENATTENTE';
+    MODIFY statut ENUM('ENATTENTE','ENCOURS','LIVREE') NOT NULL DEFAULT 'ENATTENTE';
 
 ALTER TABLE vehicule
     ADD CONSTRAINT chk_capacite_positive CHECK (capacite > 0);
+

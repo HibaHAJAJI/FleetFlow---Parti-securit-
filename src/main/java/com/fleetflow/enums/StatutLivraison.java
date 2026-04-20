@@ -1,7 +1,5 @@
 package com.fleetflow.enums;
 
 public enum StatutLivraison {
-    ENATTENTE,
-    ENCOURS,
-    LIVREE
+    ENATTENTE, ENCOURS, LIVREE
 }

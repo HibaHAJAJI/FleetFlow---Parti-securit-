@@ -24,6 +24,7 @@ public class Livraison {
     private String adresseDestination;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "statut")
     private StatutLivraison statut;
 
     @ManyToOne
@@ -37,6 +38,5 @@ public class Livraison {
     @ManyToOne
     @JoinColumn(name = "vehicule_id")
     private Vehicule vehicule;
-
 
 }

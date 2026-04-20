@@ -1,11 +1,3 @@
-FROM eclipse-temurin:21-jdk
-
-WORKDIR /app
-
-ARG JAR_FILE=target/*.jar
-
-COPY ${JAR_FILE} /app/fleetflow.jar
-
-EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "/app/fleetflow.jar"]
+FROM  eclipse-temurin:21-jdk
+COPY  /target/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]

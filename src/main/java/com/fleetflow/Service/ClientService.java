@@ -21,6 +21,9 @@ private final ClientRepository repos;
 
 
     public ClientDto addClient(ClientDto dto){
+        if(repos.findByEmail(dto.getEmail())){
+            throw  new RuntimeException("email deja exist");
+        }
         Client client=mapper.toEntity(dto);
         return mapper.toDto(repos.save(client));
     }

@@ -23,4 +23,7 @@ public class Client {
     @OneToMany(mappedBy = "client",cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Livraison>livraisons;
+
+    public Client(Long id,String sara, String mail, String casa, String number) {
+    }
 }
