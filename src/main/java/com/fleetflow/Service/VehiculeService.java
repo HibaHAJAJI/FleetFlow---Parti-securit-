@@ -3,8 +3,9 @@ package com.fleetflow.Service;
 
 import com.fleetflow.Dto.VehiculeDto;
 import com.fleetflow.enums.StatutVehicule;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
 public interface VehiculeService {
 
@@ -14,10 +15,10 @@ public interface VehiculeService {
 
     VehiculeDto updateVehicule(Long id,VehiculeDto vehiculeDto);
 
-    List<VehiculeDto> getVehiculesDisponible(StatutVehicule status);
+    Page<VehiculeDto> getVehiculesDisponible(StatutVehicule status, Pageable pageable);
 
-    List<VehiculeDto>getVehiculeByStatut(StatutVehicule statut);
+    Page<VehiculeDto>getVehiculeByStatut(StatutVehicule statut,Pageable pageable);
 
-    List<VehiculeDto>getVehiculeCapaciteGreaterThan(double seuil);
+    Page<VehiculeDto>getVehiculeCapaciteGreaterThan(double seuil, Pageable pageable);
 
 }

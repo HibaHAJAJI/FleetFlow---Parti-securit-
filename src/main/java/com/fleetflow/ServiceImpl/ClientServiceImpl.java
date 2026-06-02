@@ -18,6 +18,7 @@ public class ClientServiceImpl implements ClientService {
     private final ClientRepository repos;
 
 
+    @Override
     public ClientDto addClient(ClientDto dto){
         if(repos.findByEmail(dto.getEmail())){
             throw  new RuntimeException("email deja exist");
@@ -26,12 +27,14 @@ public class ClientServiceImpl implements ClientService {
         return mapper.toDto(repos.save(client));
     }
 
+    @Override
     public void deleteClient(Long id){
         Client client=repos.findById(id)
                 .orElseThrow(()->new RuntimeException("Client introuvable !"));
         repos.delete(client);
     }
 
+    @Override
     public ClientDto updateClient(Long id,ClientDto clientDto){
         Client client=repos.findById(id)
                 .orElseThrow(()->new RuntimeException("Client introvable !!"));
@@ -39,6 +42,7 @@ public class ClientServiceImpl implements ClientService {
         return mapper.toDto(repos.save(client));
     }
 
+    @Override
     public Page<ClientDto> getAllClient(Pageable pageable){
         Page<Client>clients=repos.findAll(pageable);
         return clients.map(mapper::toDto);

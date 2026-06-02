@@ -3,24 +3,25 @@ package com.fleetflow.Controller;
 import com.fleetflow.Dto.ClientDto;
 import com.fleetflow.Service.ClientService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/clients")
+@RequiredArgsConstructor
 public class ClientController {
     private final ClientService clientService;
 
-    public ClientController(ClientService clientService) {
-        this.clientService = clientService;
-    }
 
     @GetMapping("/afficher")
-    public List<ClientDto> afficherTousClients(){
-        return clientService.getAllClient();
+    public ResponseEntity<Page<ClientDto>> afficherTousClients(Pageable pageable){
+        Page<ClientDto>clients=clientService.getAllClient(pageable);
+        return ResponseEntity.ok(clients) ;
     }
     @PostMapping("/ajouter")
     public ResponseEntity<ClientDto> ajouterClient(@Valid @RequestBody ClientDto dto){

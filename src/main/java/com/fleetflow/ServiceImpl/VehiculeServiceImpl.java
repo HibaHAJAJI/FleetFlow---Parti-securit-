@@ -7,9 +7,10 @@ import com.fleetflow.Repository.VehiculeRepository;
 import com.fleetflow.Service.VehiculeService;
 import com.fleetflow.enums.StatutVehicule;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -36,16 +37,16 @@ public class VehiculeServiceImpl implements VehiculeService {
         return mapper.toDto(repos.save(vehicule));
     }
 
-    public List<VehiculeDto> getVehiculesDisponible(StatutVehicule status){
-        List<Vehicule>vehicules=repos.findByStatut(StatutVehicule.DISPONIBLE);
-        return mapper.toDto(vehicules);
+    public Page<VehiculeDto> getVehiculesDisponible(StatutVehicule status, Pageable pageable){
+        Page<Vehicule>vehicules=repos.findByStatut(StatutVehicule.DISPONIBLE,pageable);
+        return vehicules.map(mapper::toDto);
     }
-    public List<VehiculeDto>getVehiculeByStatut(StatutVehicule statut){
-        List<Vehicule>vehicule=repos.findByStatut(statut);
-        return mapper.toDto(vehicule);
+    public Page<VehiculeDto>getVehiculeByStatut(StatutVehicule statut,Pageable pageable){
+        Page<Vehicule>vehicule=repos.findByStatut(statut,pageable);
+        return vehicule.map(mapper::toDto);
     }
-    public List<VehiculeDto>getVehiculeCapaciteGreaterThan(double seuil){
-        List<Vehicule>vehiculeList=repos.findByCapaciteGreaterThan(seuil);
-        return mapper.toDto(vehiculeList);
+    public Page<VehiculeDto>getVehiculeCapaciteGreaterThan(double seuil,Pageable pageable){
+        Page<Vehicule>vehiculeList=repos.findByCapaciteGreaterThan(seuil,pageable);
+        return vehiculeList.map(mapper::toDto);
     }
 }

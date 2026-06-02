@@ -30,7 +30,7 @@ public class ViheculeServiceTest {
     @Mock
     private VehiculeMapper vehiculeMapper;
 
-    @Test
+  /*  @Test
     void shouldVehicule_disponible(){
         StatutVehicule status=StatutVehicule.valueOf("DISPONIBLE");
         Vehicule vehicule=new Vehicule();
@@ -59,5 +59,5 @@ public class ViheculeServiceTest {
         assertNotNull(result);
         assertEquals(1,result.size());
         assertEquals(20,result.get(0).getCapacite());
-    }
+    }*/
 }

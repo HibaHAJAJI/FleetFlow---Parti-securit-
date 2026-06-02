@@ -3,6 +3,9 @@ package com.fleetflow.Service;
 
 import com.fleetflow.Dto.LivraisonDTO;
 import com.fleetflow.enums.StatutLivraison;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,7 +13,7 @@ import java.util.List;
 
 public interface LivraisonService {
 
-    List<LivraisonDTO> getAllLivraisons();
+    Page<LivraisonDTO> getAllLivraisons(Pageable pageable);
 
     LivraisonDTO getLivraisonById(Long id);
 
@@ -22,12 +25,12 @@ public interface LivraisonService {
 
     void deleteLivraison(Long id);
 
-    List<LivraisonDTO> getLivraisonsBetweenDates(LocalDate debut, LocalDate fin);
+    Page<LivraisonDTO> getLivraisonsBetweenDates(LocalDate debut, LocalDate fin,Pageable pageable);
 
-    List<LivraisonDTO> getLivraisonsByVille(String ville);
+    Page<LivraisonDTO> getLivraisonsByVille(String ville,Pageable pageable);
 
-    List<LivraisonDTO> getLivraisonsByClient(Long clientId);
+    Page<LivraisonDTO> getLivraisonsByClient(Long clientId,Pageable pageable);
 
-    List<LivraisonDTO> getLivraisonsByStatut(StatutLivraison statut);
+    Page<LivraisonDTO> getLivraisonsByStatut(StatutLivraison statut,Pageable pageable);
 
 }

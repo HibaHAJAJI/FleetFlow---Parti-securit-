@@ -13,11 +13,12 @@ import com.fleetflow.Service.LivraisonService;
 import com.fleetflow.enums.StatutLivraison;
 import com.fleetflow.enums.StatutVehicule;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +28,9 @@ public class LivraisonServiceImpl implements LivraisonService {
     private final ChauffeurRepository chauffeurRepository;
     private final VehiculeRepository vehiculeRepository;
 
-    public List<LivraisonDTO> getAllLivraisons() {
-        return livraisonRepository.findAll()
-                .stream()
-                .map(livraisonMapper::toDTO)
-                .collect(Collectors.toList());
+    public Page<LivraisonDTO> getAllLivraisons(Pageable pageable) {
+        Page<Livraison> livraisonDTOPage=livraisonRepository.findAll(pageable);
+        return livraisonDTOPage.map(livraisonMapper::toDTO);
     }
 
     public LivraisonDTO getLivraisonById(Long id) {
@@ -114,33 +113,25 @@ public class LivraisonServiceImpl implements LivraisonService {
     }
 
 
-    public List<LivraisonDTO> getLivraisonsBetweenDates(LocalDate debut, LocalDate fin) {
-        return livraisonRepository.findLivraisonsBetweenDates(debut, fin)
-                .stream()
-                .map(livraisonMapper::toDTO)
-                .collect(Collectors.toList());
+    public Page<LivraisonDTO> getLivraisonsBetweenDates(LocalDate debut, LocalDate fin,Pageable pageable) {
+        return livraisonRepository.findLivraisonsBetweenDates(debut, fin, pageable)
+                .map(livraisonMapper::toDTO);
     }
 
 
-    public List<LivraisonDTO> getLivraisonsByVille(String ville) {
-        return livraisonRepository.findByVilleDestination(ville)
-                .stream()
-                .map(livraisonMapper::toDTO)
-                .collect(Collectors.toList());
+    public Page<LivraisonDTO> getLivraisonsByVille(String ville,Pageable pageable) {
+        return livraisonRepository.findByVilleDestination(ville,pageable)
+                .map(livraisonMapper::toDTO);
     }
 
-    public List<LivraisonDTO> getLivraisonsByClient(Long clientId) {
-        return livraisonRepository.findByClientId(clientId)
-                .stream()
-                .map(livraisonMapper::toDTO)
-                .collect(Collectors.toList());
+    public Page<LivraisonDTO> getLivraisonsByClient(Long clientId,Pageable pageable) {
+        return livraisonRepository.findByClientId(clientId,pageable)
+                .map(livraisonMapper::toDTO);
+
     }
 
-
-    public List<LivraisonDTO> getLivraisonsByStatut(StatutLivraison statut) {
-        return livraisonRepository.findByStatut(statut)
-                .stream()
-                .map(livraisonMapper::toDTO)
-                .collect(Collectors.toList());
+    public Page<LivraisonDTO> getLivraisonsByStatut(StatutLivraison statut,Pageable pageable) {
+        return livraisonRepository.findByStatut(statut,pageable)
+                .map(livraisonMapper::toDTO);
     }
 }

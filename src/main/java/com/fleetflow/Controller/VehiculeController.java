@@ -5,6 +5,8 @@ import com.fleetflow.Dto.VehiculeDto;
 import com.fleetflow.Service.VehiculeService;
 import com.fleetflow.enums.StatutVehicule;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +23,11 @@ public class VehiculeController {
     }
 
     @GetMapping("/disponibles")
-    public ResponseEntity< List<VehiculeDto>> afficherVehiculDisponible(){
-        List<VehiculeDto>disponibles=vehiculeService.getVehiculesDisponible(StatutVehicule.DISPONIBLE);
+    public ResponseEntity<Page<VehiculeDto>> afficherVehiculDisponible(Pageable pageable){
+        Page<VehiculeDto>disponibles=vehiculeService.getVehiculesDisponible(StatutVehicule.DISPONIBLE,pageable);
         return ResponseEntity.ok(disponibles);
     }
+
     @PostMapping("/ajouter")
     public VehiculeDto ajouterVehicule(@Valid @RequestBody VehiculeDto dto){
         return vehiculeService.addVehicule(dto);
@@ -33,16 +36,19 @@ public class VehiculeController {
     public ResponseEntity<VehiculeDto>  modifierVehicule(@Valid @PathVariable Long id,@RequestBody VehiculeDto dto){
         return new ResponseEntity<>(vehiculeService.updateVehicule(id,dto), HttpStatus.CREATED) ;
     }
+
     @DeleteMapping("/supprimer/{id}")
     public void supprimerVehicule(@PathVariable Long id){
         vehiculeService.deleteVehicule(id);
     }
+
     @GetMapping("/statut")
-    public List<VehiculeDto>findbyStatut(@RequestParam StatutVehicule status){
-        return vehiculeService.getVehiculeByStatut(status);
+    public Page<VehiculeDto>findbyStatut(@RequestParam StatutVehicule status,Pageable pageable){
+        return vehiculeService.getVehiculeByStatut(status,pageable);
     }
+
     @GetMapping("/capacite/{seuil}")
-    public List<VehiculeDto> findByCapaciteGreaterThan(@PathVariable double seuil){
-        return vehiculeService.getVehiculeCapaciteGreaterThan(seuil);
+    public Page<VehiculeDto> findByCapaciteGreaterThan(@PathVariable double seuil,Pageable pageable){
+        return vehiculeService.getVehiculeCapaciteGreaterThan(seuil,pageable);
     }
 }

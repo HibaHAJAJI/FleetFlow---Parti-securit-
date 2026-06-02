@@ -2,6 +2,8 @@ package com.fleetflow.Repository;
 
 import com.fleetflow.Entity.Livraison;
 import com.fleetflow.enums.StatutLivraison;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,16 +14,16 @@ import java.util.List;
 @Repository
 public interface LivraisonRepository extends JpaRepository<Livraison, Long> {
 
-    List<Livraison> findByStatut(StatutLivraison statut);
+    Page<Livraison> findByStatut(StatutLivraison statut,Pageable pageable);
 
-    List<Livraison> findByClientId(Long clientId);
+    Page<Livraison> findByClientId(Long clientId,Pageable pageable);
 
     @Query("SELECT l FROM Livraison l WHERE l.dateLivraison BETWEEN :dateDebut AND :dateFin")
-    List<Livraison> findLivraisonsBetweenDates(
+    Page<Livraison> findLivraisonsBetweenDates(
             @Param("dateDebut") LocalDate dateDebut,
-            @Param("dateFin") LocalDate dateFin
+            @Param("dateFin") LocalDate dateFin,Pageable pageable
     );
 
     @Query("SELECT l FROM Livraison l WHERE l.adresseDestination LIKE %:ville%")
-    List<Livraison> findByVilleDestination(@Param("ville") String ville);
+    Page<Livraison> findByVilleDestination(@Param("ville") String ville, Pageable pageable);
 }

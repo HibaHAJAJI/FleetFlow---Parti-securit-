@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +26,8 @@ public class LivraisonController {
 
     @GetMapping
     @Operation(summary = "Lister toutes les livraisons")
-    public ResponseEntity<List<LivraisonDTO>> getAllLivraisons() {
-        return ResponseEntity.ok(livraisonService.getAllLivraisons());
+    public ResponseEntity<Page<LivraisonDTO>> getAllLivraisons(Pageable pageable) {
+        return ResponseEntity.ok(livraisonService.getAllLivraisons(pageable));
     }
 
     @GetMapping("/{id}")
@@ -69,27 +71,28 @@ public class LivraisonController {
 
     @GetMapping("/dates")
     @Operation(summary = "Livraisons entre deux dates")
-    public ResponseEntity<List<LivraisonDTO>> getByDates(
+    public ResponseEntity<Page<LivraisonDTO>> getByDates(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate debut,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin) {
-        return ResponseEntity.ok(livraisonService.getLivraisonsBetweenDates(debut, fin));
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin,
+            Pageable pageable) {
+        return ResponseEntity.ok(livraisonService.getLivraisonsBetweenDates(debut, fin, pageable));
     }
 
     @GetMapping("/ville")
     @Operation(summary = "Livraisons par ville de destination")
-    public ResponseEntity<List<LivraisonDTO>> getByVille(@RequestParam String ville) {
-        return ResponseEntity.ok(livraisonService.getLivraisonsByVille(ville));
+    public ResponseEntity<Page<LivraisonDTO>> getByVille(@RequestParam String ville,Pageable pageable) {
+        return ResponseEntity.ok(livraisonService.getLivraisonsByVille(ville,pageable));
     }
 
     @GetMapping("/client/{clientId}")
     @Operation(summary = "Livraisons par client")
-    public ResponseEntity<List<LivraisonDTO>> getByClient(@PathVariable Long clientId) {
-        return ResponseEntity.ok(livraisonService.getLivraisonsByClient(clientId));
+    public ResponseEntity<Page<LivraisonDTO>> getByClient(@PathVariable Long clientId,Pageable pageable) {
+        return ResponseEntity.ok(livraisonService.getLivraisonsByClient(clientId,pageable));
     }
 
     @GetMapping("/statut")
     @Operation(summary = "Livraisons par statut")
-    public ResponseEntity<List<LivraisonDTO>> getByStatut(@RequestParam StatutLivraison statut) {
-        return ResponseEntity.ok(livraisonService.getLivraisonsByStatut(statut));
+    public ResponseEntity<Page<LivraisonDTO>> getByStatut(@RequestParam StatutLivraison statut,Pageable pageable) {
+        return ResponseEntity.ok(livraisonService.getLivraisonsByStatut(statut,pageable));
     }
 }
