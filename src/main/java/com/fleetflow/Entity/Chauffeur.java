@@ -8,14 +8,10 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Chauffeur {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Chauffeur extends Users {
 
-    @Column(nullable = false)
-    private String nom;
+
 
     private String telephone;
 
