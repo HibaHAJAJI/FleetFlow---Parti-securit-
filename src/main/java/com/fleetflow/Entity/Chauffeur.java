@@ -8,10 +8,8 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
+@PrimaryKeyJoinColumn(name = "id")
 public class Chauffeur extends Users {
-
-
 
     private String telephone;
 
