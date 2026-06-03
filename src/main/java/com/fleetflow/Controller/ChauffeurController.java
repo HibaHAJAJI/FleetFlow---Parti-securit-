@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,24 +23,28 @@ public class ChauffeurController {
 
     @GetMapping
     @Operation(summary = "Lister tous les chauffeurs")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<Page<ChauffeurDTO>> getAllChauffeurs(Pageable pageable) {
         return ResponseEntity.ok(chauffeurService.getAllChauffeurs(pageable));
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Trouver un chauffeur par ID")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<ChauffeurDTO> getChauffeurById(@PathVariable Long id) {
         return ResponseEntity.ok(chauffeurService.getChauffeurById(id));
     }
 
     @GetMapping("/disponibles")
     @Operation(summary = "Lister les chauffeurs disponibles")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<Page<ChauffeurDTO>> getChauffeursDisponibles(Pageable pageable) {
         return ResponseEntity.ok(chauffeurService.getChauffeursdisponibles(pageable));
     }
 
     @PostMapping
     @Operation(summary = "Ajouter un chauffeur")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ChauffeurDTO> createChauffeur(@Valid @RequestBody ChauffeurDTO chauffeurDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(chauffeurService.createChauffeur(chauffeurDTO));
@@ -47,13 +52,14 @@ public class ChauffeurController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Modifier un chauffeur")
-    public ResponseEntity<ChauffeurDTO> updateChauffeur( @PathVariable Long id,
-                                                         @Valid @RequestBody ChauffeurDTO chauffeurDTO) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ChauffeurDTO> updateChauffeur( @PathVariable Long id, @Valid @RequestBody ChauffeurDTO chauffeurDTO) {
         return ResponseEntity.ok(chauffeurService.updateChauffeur(id, chauffeurDTO));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Supprimer un chauffeur")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteChauffeur(@PathVariable Long id) {
         chauffeurService.deleteChauffeur(id);
         return ResponseEntity.noContent().build();
