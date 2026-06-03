@@ -1,1 +1,1 @@
-alter table users add column role enum('ADMIN','MANAGER','CHAUFFEUR') not null default 'PATIENT';
+alter table users add column role enum('ADMIN','MANAGER','CHAUFFEUR') not null default 'CHAUFFEUR';

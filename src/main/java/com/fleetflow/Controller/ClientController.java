@@ -15,23 +15,27 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/clients")
 @RequiredArgsConstructor
 public class ClientController {
+
     private final ClientService clientService;
 
 
-    @GetMapping("/afficher")
+    @GetMapping
     public ResponseEntity<Page<ClientDto>> afficherTousClients(Pageable pageable){
         Page<ClientDto>clients=clientService.getAllClient(pageable);
         return ResponseEntity.ok(clients) ;
     }
-    @PostMapping("/ajouter")
+
+    @PostMapping
     public ResponseEntity<ClientDto> ajouterClient(@Valid @RequestBody ClientDto dto){
         return new ResponseEntity<>(clientService.addClient(dto), HttpStatus.CREATED) ;
     }
-    @PutMapping("/modifier/{id}")
+
+    @PutMapping("/{id}")
     public ResponseEntity<ClientDto> modifierClient(@PathVariable Long id,@RequestBody ClientDto dto){
         return new ResponseEntity<>( clientService.updateClient(id,dto),HttpStatus.CREATED);
     }
-    @DeleteMapping("/supprimer/{id}")
+
+    @DeleteMapping("/{id}")
     public void supprimerClient(@PathVariable Long id){
         clientService.deleteClient(id);
     }

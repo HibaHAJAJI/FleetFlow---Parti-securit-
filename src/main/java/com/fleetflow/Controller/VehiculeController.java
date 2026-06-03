@@ -5,6 +5,7 @@ import com.fleetflow.Dto.VehiculeDto;
 import com.fleetflow.Service.VehiculeService;
 import com.fleetflow.enums.StatutVehicule;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -13,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/vehicule")
+@RequiredArgsConstructor
 public class VehiculeController {
+
     private final VehiculeService vehiculeService;
 
-    public VehiculeController(VehiculeService vehiculeService) {
-        this.vehiculeService = vehiculeService;
-    }
 
     @GetMapping("/disponibles")
     public ResponseEntity<Page<VehiculeDto>> afficherVehiculDisponible(Pageable pageable){
@@ -28,10 +29,11 @@ public class VehiculeController {
         return ResponseEntity.ok(disponibles);
     }
 
-    @PostMapping("/ajouter")
-    public VehiculeDto ajouterVehicule(@Valid @RequestBody VehiculeDto dto){
-        return vehiculeService.addVehicule(dto);
+    @PostMapping
+    public ResponseEntity<VehiculeDto> ajouterVehicule(@Valid @RequestBody VehiculeDto dto){
+        return ResponseEntity.ok(vehiculeService.addVehicule(dto));
     }
+
     @PutMapping("/modifier/{id}")
     public ResponseEntity<VehiculeDto>  modifierVehicule(@Valid @PathVariable Long id,@RequestBody VehiculeDto dto){
         return new ResponseEntity<>(vehiculeService.updateVehicule(id,dto), HttpStatus.CREATED) ;
@@ -43,12 +45,12 @@ public class VehiculeController {
     }
 
     @GetMapping("/statut")
-    public Page<VehiculeDto>findbyStatut(@RequestParam StatutVehicule status,Pageable pageable){
-        return vehiculeService.getVehiculeByStatut(status,pageable);
+    public ResponseEntity<Page<VehiculeDto>> findbyStatut(@RequestParam StatutVehicule status,Pageable pageable){
+        return ResponseEntity.ok(vehiculeService.getVehiculeByStatut(status,pageable));
     }
 
     @GetMapping("/capacite/{seuil}")
-    public Page<VehiculeDto> findByCapaciteGreaterThan(@PathVariable double seuil,Pageable pageable){
-        return vehiculeService.getVehiculeCapaciteGreaterThan(seuil,pageable);
+    public ResponseEntity<Page<VehiculeDto>>  findByCapaciteGreaterThan(@PathVariable double seuil,Pageable pageable){
+        return ResponseEntity.ok(vehiculeService.getVehiculeCapaciteGreaterThan(seuil,pageable));
     }
 }
