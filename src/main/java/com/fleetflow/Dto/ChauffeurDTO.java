@@ -6,8 +6,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ChauffeurDTO {
+public class ChauffeurDTO extends UserDto {
 
     @NotBlank(message = "Le telephone est obligatoire")
     private String telephone;

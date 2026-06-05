@@ -1,9 +1,7 @@
 package com.fleetflow.Configuration;
 
 
-import com.fleetflow.Entity.Users;
 import com.fleetflow.Filter.JwtAuthentifacationFilter;
-import com.fleetflow.Repository.UserRepository;
 import com.fleetflow.ServiceImpl.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

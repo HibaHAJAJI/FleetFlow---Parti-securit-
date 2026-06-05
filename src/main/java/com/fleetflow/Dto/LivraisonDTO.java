@@ -1,3 +1,4 @@
+
 package com.fleetflow.Dto;
 
 import com.fleetflow.enums.StatutLivraison;
@@ -15,14 +16,21 @@ public class LivraisonDTO {
 
     @NotNull(message = "La date est obligatoire")
     private LocalDate dateLivraison;
+
     @NotBlank(message = "L'adresse de départ est obligatoire")
     private String adresseDepart;
 
     @NotBlank(message = "L'adresse destination est obligatoire")
     private String adresseDestination;
+
     private StatutLivraison statut;
 
+    @NotNull
     private Long clientId;
+
+    @NotNull
     private Long chauffeurId;
+
+    @NotNull
     private Long vehiculeId;
 }

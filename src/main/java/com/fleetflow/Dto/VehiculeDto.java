@@ -10,14 +10,18 @@ import lombok.Data;
 
 @Data
 public class VehiculeDto {
+
     private Long id;
     @NotBlank(message = "Le matricul est obligatoire")
     private String matricule;
+
     @NotBlank(message = "Le type est obligatoire")
     private String type;
+
     @NotNull(message = "La capacite est obligatoire")
     @Positive(message = "la capacite doit etre positive")
     private Double capacite;
+
     @NotNull(message = "Le statut est obligatoire")
     private StatutVehicule statut;
 }
